@@ -1,55 +1,39 @@
-const path = require('path');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+
 
 module.exports = {
-  entry: [
-    './src/index.js',
-    './scss/style.scss'
-  ],
-  output: {
-    filename: './bundle.js'
+  entry: {
+    main: path.resolve(__dirname, './src/index.js'),
   },
-  devtool: "source-map",
+  output: {
+    path: path.resolve(__dirname, './dist'),
+    filename: '[name].bundle.js',
+  },
   module: {
     rules: [
       {
-        test: /\.(sass|scss)$/,
-        include: path.resolve(__dirname, 'scss'),
-        use: ExtractTextPlugin.extract({
-          use: [{
-            loader: "css-loader",
-            options: {
-              sourceMap: true,
-              minimize: true,
-              url: true
-            }
-          },
-            {
-              loader: "sass-loader",
-              options: {
-                sourceMap: true
-              }
-            }
-          ]
-        })
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: ['babel-loader'],
       },
       {
-      test: /\.js$/,
-      include: path.resolve(__dirname, 'src'),
-      use: {
-        loader: 'babel-loader',
-        options: {
-          presets: 'env'
-        }
-      }
-    },
-    ]
+        test: /\.(woff(2)?|eot|ttf|otf|svg|)$/,
+        type: 'assets/inline',
+      },
+      {
+        test: /\.(scss|css)$/,
+        use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
+      },
+    ],
   },
-
   plugins: [
-    new ExtractTextPlugin({
-      filename: './css/style.bundle.css',
-      allChunks: true,
+    new HtmlWebpackPlugin({
+      title: 'Boilerplate',
+      template: path.resolve(__dirname, './src/templates/template.html'),
+      filename: 'index.html',
     }),
-  ]
-};
+    new CleanWebpackPlugin(),
+  ],
+}
