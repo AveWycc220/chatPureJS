@@ -11,7 +11,7 @@ p.textContent = `I like ${myGame.game}.`
 
 // создаем элемент заголовка
 const heading = document.createElement('h1')
-heading.textContent = 'Как интересно!'
+heading.textContent = 'Как интересно выавыаы!'
 
 // добавляем параграф и заголовок в DOM
 const root = document.querySelector('#root')
