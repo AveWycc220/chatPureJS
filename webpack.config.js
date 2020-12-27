@@ -6,6 +6,9 @@ const webpack = require('webpack')
 
 module.exports = {
   mode: 'production',
+  experiments: {
+    asset: true
+  },
   entry: {
     main: path.resolve(__dirname, './src/index.js'),
   },
@@ -30,11 +33,15 @@ module.exports = {
       },
       {
         test: /\.(woff(2)?|eot|ttf|otf|svg|)$/,
-        type: 'assets/inline',
+        type: 'asset/inline',
       },
       {
         test: /\.(scss|css)$/,
         use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
+      },
+      {
+        test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
+        type: 'asset/resource',
       },
     ],
   },
