@@ -47,7 +47,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Boilerplate',
+      title: 'Chat',
       template: path.resolve(__dirname, './src/index.html'),
       filename: 'index.html',
     }),
