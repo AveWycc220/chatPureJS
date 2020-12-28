@@ -60,7 +60,7 @@ module.exports = {
     new CleanWebpackPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new Dotenv({
-      path: './.env',
+      path: './dev.env',
       safe: true
     })
   ],
