@@ -9,6 +9,7 @@ class EventsHandler{
     this.info = divInfo
     this.signinEvent(form, signinButton)
     this.loginEvent(form, loginButton)
+    this.loadingEvent()
   }
 
   signinEvent(form, btn) {
@@ -36,6 +37,14 @@ class EventsHandler{
         }
       })
     }
+  }
+
+  loadingEvent() {
+    document.addEventListener('DOMContentLoaded', () => {
+      let root = document.querySelector('.root')
+      console.log(root)
+      root.style.display = 'block'
+    })
   }
 }
 
