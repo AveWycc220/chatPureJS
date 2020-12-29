@@ -14,6 +14,14 @@ class Router {
       }
     }
   }
+
+  redirectToMain() {
+    window.location.href = `../`
+  }
+
+  redirectToLogin() {
+    window.location.href = `../login`
+  }
 }
 
 export default Router
