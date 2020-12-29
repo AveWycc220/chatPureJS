@@ -2,8 +2,14 @@
   overflow: hidden;
 }
 
+.info {
+  margin-top: 1.25em;
+}
+
 .form {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   flex-direction: column;
   background-color: #ffffff;
   width: 20em;
@@ -26,7 +32,7 @@
   margin-top: 1.5em;
 }
 
-.open-button {
+#log-in, #sign-in {
   background: #2431e2;
   color: #ffffff;
   border: none;
@@ -45,13 +51,13 @@
   transition-duration: .5s;
 }
 
-.open-button:hover{
+#log-in:hover, #sign-in:hover{
   background: #434bff;
   cursor: pointer;
 }
 
-.open-button:active,
-.open-button:focus {
+#log-in:active, #sign-in:active,
+#log-in:focus, #sign-in:focus {
   outline: none;
   background: #b2c4ff;
 }
@@ -82,6 +88,9 @@ input:active, input:hover, input:focus {
   .open-button{
     font-size: 12px;
   }
+  .info {
+    font-size: 12px;
+  }
 }
 
 @media (min-width: 2000px) {
@@ -94,6 +103,9 @@ input:active, input:hover, input:focus {
   .open-button{
     font-size: 20px;
   }
+  .info {
+    font-size: 20px;
+  }
 }
 
 @media (min-width: 2300px) {
@@ -104,6 +116,9 @@ input:active, input:hover, input:focus {
     font-size: 22px;
   }
   .open-button {
+    font-size: 22px;
+  }
+  .info {
     font-size: 22px;
   }
 }
