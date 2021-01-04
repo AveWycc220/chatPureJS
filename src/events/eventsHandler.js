@@ -42,8 +42,7 @@ class EventsHandler{
   loadingEvent() {
     document.addEventListener('DOMContentLoaded', () => {
       let root = document.querySelector('.root')
-      console.log(root)
-      root.style.display = 'block'
+      render.showDiv(root)
     })
   }
 }

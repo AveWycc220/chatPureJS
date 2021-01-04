@@ -9,8 +9,8 @@ class Router {
         window.location.replace(`http://${process.env.DOMAIN}:${process.env.PORT}/login`)
       }
     } else if (process.env.MODE === 'PROD') {
-      if (cookieWorker.getCookie('id') === -1 && window.location.href !== `${process.env.PROTOCOL}://${process.env.DOMAIN}/login`) {
-        window.location.replace(`${process.env.PROTOCOL}://${process.env.DOMAIN}/login`)
+      if (cookieWorker.getCookie('id') === -1 && window.location.href !== `${process.env.PROTOCOL}://${process.env.DOMAIN}/login/`) {
+        window.location.replace(`${process.env.PROTOCOL}://${process.env.DOMAIN}/login/`)
       }
     }
   }

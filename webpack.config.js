@@ -49,12 +49,12 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Chat',
-      template: path.resolve(__dirname, './src/index.html'),
+      template: path.resolve(__dirname, './pages/index.html'),
       filename: 'index.html',
     }),
     new HtmlWebpackPlugin({
       title: 'Chat-Login',
-      template: path.resolve(__dirname, './src/login/index.html'),
+      template: path.resolve(__dirname, './pages/login/index.html'),
       filename: 'login/index.html',
     }),
     new CleanWebpackPlugin(),

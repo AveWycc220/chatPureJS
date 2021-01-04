@@ -4,6 +4,10 @@ class DOMRender {
     input.style.border = '2px solid red'
   }
 
+  showDiv(div) {
+    div.style.display = 'block'
+  }
+
   restyleForm(form, signin=false) {
     if (!form[0].value) {
       form[0].style.border = '2px solid red'
