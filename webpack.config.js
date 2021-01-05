@@ -33,7 +33,7 @@ module.exports = {
         use: ['babel-loader'],
       },
       {
-        test: /\.(woff(2)?|eot|ttf|otf|svg|)$/,
+        test: /\.(woff(2)?|eot|ttf|otf|)$/,
         type: 'asset/inline',
       },
       {
@@ -44,6 +44,11 @@ module.exports = {
         test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
         type: 'asset/resource',
       },
+      {
+        test: /\.svg$/,
+        type: 'asset/inline',
+        use: 'svgo-loader'
+      }
     ],
   },
   plugins: [
@@ -62,6 +67,6 @@ module.exports = {
     new Dotenv({
       path: './dev.env',
       safe: true
-    })
+    }),
   ],
 }
