@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Chat</title>
-    <link rel="shortcut icon" href="7efca521d558781c8fe6.ico" type="image/ico">
+    <link rel="shortcut icon" href="d6da2a2a8b78756892f6.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
 <div class="root" style="display: none">
-    <h1>Check</h1>
+    <%= require('html-loader!./views/header.html') %>
+    <%= require('html-loader!./views/chat.html') %>
 </div>
 </body>
 </html>
