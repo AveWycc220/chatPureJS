@@ -1,5 +1,5 @@
 import '../scss/style.scss'
-import '../assets/img/chat.ico'
+import '../assets/img/chat.png'
 import EventsHandler from './events/eventsHandler'
 import API from './api/api'
 import Router from './router/router';
