@@ -42,7 +42,8 @@ class API {
     this.socket.onmessage = function(e) {
       let res = JSON.parse(e.data)
       if (res.status === 1) {
-        cookieWorker.add({name: 'id', value: res.user_key, maxAge: 86400})
+        cookieWorker.add({name: 'id', value: res.user_key, maxAge: 86400, path:'/'})
+        cookieWorker.add({name: 'name', value: res.name, maxAge: 86400, path:'/'})
         router.redirectToMain()
       } else {
         info.innerHTML = 'Wrong Email or Password'
