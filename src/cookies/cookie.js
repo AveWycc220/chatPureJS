@@ -9,12 +9,12 @@ class Cookie{
     if (value.hasOwnProperty('name') && value.hasOwnProperty('value')) {
       this.values = {};
       let cookie = `${value.name}=${value.value};`;
-      if (value.hasOwnProperty('maxAge')) cookie += `max-age=${value.maxAge}`;
-      if (value.hasOwnProperty('domain')) cookie += `domain=${value.domain}`;
-      if (value.hasOwnProperty('path')) cookie += `path=${value.path}`;
-      if (value.hasOwnProperty('samesite')) cookie += `samesite=${value.samesite}`;
-      if (value.hasOwnProperty('secure')) if (value.secure) cookie += `secure`;
-      if (value.hasOwnProperty('expires')) cookie += `expires=${value.expires}`;
+      if (value.hasOwnProperty('maxAge')) cookie += `max-age=${value.maxAge};`;
+      if (value.hasOwnProperty('domain')) cookie += `domain=${value.domain};`;
+      if (value.hasOwnProperty('path')) cookie += `path=${value.path};`;
+      if (value.hasOwnProperty('samesite')) cookie += `samesite=${value.samesite};`;
+      if (value.hasOwnProperty('secure')) if (value.secure) cookie += `secure;`;
+      if (value.hasOwnProperty('expires')) cookie += `expires=${value.expires};`;
       document.cookie = cookie;
       this.updateValues();
     }
