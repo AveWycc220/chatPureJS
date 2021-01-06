@@ -8,7 +8,9 @@ class API {
   constructor(url) {
     try {
       this.socket = new WebSocket(url)
-      this.status = 0
+      this.socket.onmessage = function (e) {
+        console.log(JSON.parse(e.data))
+      }
     } catch(e) {
       console.log(`Server-Error ${e}`)
     }
@@ -47,6 +49,24 @@ class API {
         router.redirectToMain()
       } else {
         info.innerHTML = 'Wrong Email or Password'
+      }
+    }
+  }
+
+  send(message) {
+    let obj = {
+      command: 'message_create',
+      message: message,
+      time: Date.now(),
+      user_key: cookieWorker.getCookie('id')
+    }
+    this.socket.send(JSON.stringify(obj))
+    this.socket.onmessage = function(e) {
+      let res = JSON.parse(e.data)
+      if (res.status === 0) {
+        cookieWorker.delete('id')
+        cookieWorker.delete('name')
+        router.redirectToLogin()
       }
     }
   }
