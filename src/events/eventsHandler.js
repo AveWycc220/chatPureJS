@@ -1,26 +1,24 @@
-import DOMRender from "../render/render";
-
-const render = new DOMRender()
-
-class EventsHandler{
-  constructor({api = undefined, form = undefined, loginButton = undefined, signinButton =  undefined,
-                divInfo = undefined}) {
-    this.api = api
+export default class EventsHandler{
+  constructor({renderWorker = undefined, apiWorker = undefined, form = undefined, loginButton = undefined, signinButton =  undefined,
+                divInfo = undefined, buttonSend = undefined, messageInput = undefined}) {
+    this.render = renderWorker
+    this.api = apiWorker
     this.info = divInfo
     this.signinEvent(form, signinButton)
     this.loginEvent(form, loginButton)
+    this.sendEvent(messageInput, buttonSend)
     this.loadingEvent()
   }
 
   signinEvent(form, btn) {
     if (btn && form) {
       btn.addEventListener('click', () => {
-        render.showInput(form[2])
+        this.render.showInput(form[2])
         if (form[0].value && form[1].value && form[2].value) {
           this.api.signIn(form, this.info)
-          render.restyleForm(form, true)
+          this.render.restyleForm(form, true)
         } else {
-          render.restyleForm(form, true)
+          this.render.restyleForm(form, true)
         }
       })
     }
@@ -29,11 +27,27 @@ class EventsHandler{
   loginEvent(form, btn) {
     if (btn && form) {
       btn.addEventListener('click', () => {
-        if (form[0].value && form[1].value) {
-          this.api.logIn(form, this.info)
-          render.restyleForm(form)
-        } else {
-          render.restyleForm(form)
+        this._login(form)
+      })
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Enter') {
+          this._login(form)
+        }
+      })
+    }
+  }
+
+  sendEvent(messageInput, btn) {
+    if (messageInput && btn) {
+      btn.addEventListener('click', () => {
+        this._callSendAPI(messageInput.textContent)
+        messageInput.textContent = ''
+      })
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Enter' && e.shiftKey !== true) {
+          this._callSendAPI(messageInput.textContent)
+          messageInput.textContent = ''
+          e.preventDefault()
         }
       })
     }
@@ -41,10 +55,25 @@ class EventsHandler{
 
   loadingEvent() {
     document.addEventListener('DOMContentLoaded', () => {
-      let root = document.querySelector('.root')
-      render.showDiv(root)
+      const userNameField = document.querySelector('#name')
+      if (userNameField) {
+        this.render.renderName(userNameField)
+      }
+      const root = document.querySelector('.root')
+      this.render.showDiv(root)
     })
   }
-}
 
-export default EventsHandler
+  _callSendAPI(message) {
+    if (message) { this.api.send(message) }
+  }
+
+  _login(form) {
+    if (form[0].value && form[1].value) {
+      this.api.logIn(form, this.info)
+      this.render.restyleForm(form)
+    } else {
+      this.render.restyleForm(form)
+    }
+  }
+}
