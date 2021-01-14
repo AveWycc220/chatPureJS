@@ -24,7 +24,8 @@ const eventHandler = new EventsHandler({
   signinButton: document.querySelector('#sign-in'),
   divInfo: document.querySelector('.info'),
   buttonSend: document.querySelector('#send'),
-  messageInput: document.querySelector('.textarea')
+  messageInput: document.querySelector('.textarea'),
+  logoutButton: document.querySelector('#log-out')
 })
 
 console.log(process.env.MODE)

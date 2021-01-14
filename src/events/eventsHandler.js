@@ -1,6 +1,8 @@
 export default class EventsHandler{
-  constructor({renderWorker = undefined, apiWorker = undefined, form = undefined, loginButton = undefined, signinButton =  undefined,
-                divInfo = undefined, buttonSend = undefined, messageInput = undefined}) {
+  constructor({renderWorker = undefined, apiWorker = undefined, form = undefined,
+                loginButton = undefined, signinButton =  undefined,
+                  divInfo = undefined, buttonSend = undefined, messageInput = undefined,
+                    logoutButton = undefined }) {
     this.render = renderWorker
     this.api = apiWorker
     this.info = divInfo
@@ -8,6 +10,7 @@ export default class EventsHandler{
     this.loginEvent(form, loginButton)
     this.sendEvent(messageInput, buttonSend)
     this.loadingEvent()
+    this.logoutEvent(logoutButton)
   }
 
   signinEvent(form, btn) {
@@ -62,6 +65,14 @@ export default class EventsHandler{
       const root = document.querySelector('.root')
       this.render.showDiv(root)
     })
+  }
+
+  logoutEvent(logoutButton) {
+    if (logoutButton) {
+      logoutButton.addEventListener('click', () => {
+        this.api.logout()
+      })
+    }
   }
 
   _callSendAPI(message) {

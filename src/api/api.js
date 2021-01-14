@@ -15,7 +15,7 @@ export default class API {
   }
 
   signIn(form, info) {
-    let obj = {
+    const obj = {
       command: 'user_create',
       name: form[2].value,
       email: form[0].value,
@@ -30,10 +30,11 @@ export default class API {
         info.innerHTML = 'User is already created!'
       }
     }.bind(this)
+    this._listenCommand()
   }
 
   logIn(form, info) {
-    let obj = {
+    const obj = {
       command: 'user_login',
       email: form[0].value,
       password: form[1].value
@@ -49,10 +50,11 @@ export default class API {
         info.innerHTML = 'Wrong Email or Password'
       }
     }.bind(this)
+    this._listenCommand()
   }
 
   send(message) {
-    let obj = {
+    const obj = {
       command: 'message_create',
       message: message,
       time: Date.now(),
@@ -67,10 +69,11 @@ export default class API {
         this.router.redirectToLogin()
       }
     }.bind(this)
+    this._listenCommand()
   }
 
   getMessageList() {
-    let obj = {
+    const obj = {
       command: 'messages_read',
       start: 0,
       end: 100
@@ -84,6 +87,18 @@ export default class API {
         }
       }
     }.bind(this)
+    this._listenCommand()
+  }
+
+  logout() {
+    const obj = {
+      command: 'user_exit',
+      user_key: this.cookie.getCookie('id')
+    }
+    this.socket.send(JSON.stringify(obj))
+    this.cookie.delete('id')
+    this.cookie.delete('name')
+    this.router.redirectToLogin()
   }
 
   _listenCommand() {
