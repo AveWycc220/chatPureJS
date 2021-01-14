@@ -5,10 +5,12 @@ export default class API {
     this.state = stateChat
     try {
       this.socket = new WebSocket(url)
-      this.socket.onopen = function () {
-        this.getMessageList()
-      }.bind(this)
-      this._listenCommand()
+      if (!this.router.isLoginPage()) {
+        this.socket.onopen = function () {
+          this.getMessageList()
+        }.bind(this)
+        this._listenCommand()
+      }
     } catch(e) {
       console.log(`Server-Error ${e}`)
     }
@@ -30,7 +32,6 @@ export default class API {
         info.innerHTML = 'User is already created!'
       }
     }.bind(this)
-    this._listenCommand()
   }
 
   logIn(form, info) {
@@ -50,7 +51,6 @@ export default class API {
         info.innerHTML = 'Wrong Email or Password'
       }
     }.bind(this)
-    this._listenCommand()
   }
 
   send(message) {
@@ -69,7 +69,6 @@ export default class API {
         this.router.redirectToLogin()
       }
     }.bind(this)
-    this._listenCommand()
   }
 
   getMessageList() {
@@ -87,7 +86,6 @@ export default class API {
         }
       }
     }.bind(this)
-    this._listenCommand()
   }
 
   logout() {
@@ -102,8 +100,8 @@ export default class API {
   }
 
   _listenCommand() {
-    this.socket.onmessage = function (e) {
+    this.socket.addEventListener('message', e => {
       console.log(JSON.parse(e.data))
-    }
+    })
   }
 }

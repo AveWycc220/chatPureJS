@@ -22,4 +22,9 @@ export default class Router {
   redirectToLogin() {
     window.location.href = `../login`
   }
+
+  isLoginPage() {
+    if (process.env.MODE === 'DEV') { return window.location.href === `http://${process.env.DOMAIN}:${process.env.PORT}/login`}
+    else if (process.env.MODE === 'PROD') { return window.location.href === `${process.env.PROTOCOL}://${process.env.DOMAIN}/login/`}
+  }
 }
