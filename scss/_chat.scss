@@ -5,6 +5,20 @@ section {
   font-size: 20px;
 }
 
+%messages_button {
+  transition: 0.5s;
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+  }
+  border: none;
+  outline: none;
+  width: 1vw;
+  height: 1vw;
+  margin: 0 0.25em;
+  font-size: inherit;
+}
+
 #message-input {
   margin: 1em;
   display: flex;
@@ -57,7 +71,7 @@ section {
 }
 
 .my {
-  margin: 1em 1em 0 auto;
+  margin: 1em 1em 1em auto;
   padding: 0.5em;
   border-color: #0D1317;
 }
@@ -74,6 +88,22 @@ section {
   margin-top: 0.1em;
   opacity: 0.75;
   font-size: 1em * 0.75;
+}
+
+.control {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#edit {
+  @extend %messages_button;
+  background: url("../assets/img/edit.svg") no-repeat;
+}
+
+#delete {
+  @extend %messages_button;
+  background: url("../assets/img/delete.svg") no-repeat;
 }
 
 @media (min-width: 1950px) {
@@ -97,6 +127,14 @@ section {
 @media (max-width: 1450px) {
   section {
     font-size: 16px;
+  }
+  #edit {
+    width: 2vw;
+    height: 2vw;
+  }
+  #delete {
+    width: 2vw;
+    height: 2vw;
   }
 }
 

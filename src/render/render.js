@@ -44,11 +44,19 @@ export default class DOMRender {
     }
     if (this.nodeMessages) {
       const message = document.createElement('div')
+      const btnList = `<div class="btn-list">
+                            <button id="edit"></button>
+                            <button id="delete"></button>
+                       </div>`
+      const isMyMessage = objMessage.name === this.userName
       message.classList.add('message')
-      objMessage.name === this.userName ? message.classList.add('my') : message.classList.add('someone')
-      message.innerHTML = `<p class="nickname">${objMessage.name}</p>
-                         <p class="time">${new Date(+objMessage.time).toString().split(' ').slice(1, 5).join(' ')}</p>
-                         <p class="message-text">${objMessage.message}</p>`
+      isMyMessage ? message.classList.add('my') : message.classList.add('someone')
+      message.innerHTML = `<div class="control"> 
+                                <p class="nickname">${objMessage.name}</p>
+                                ${isMyMessage ? btnList : ''}
+                            </div>
+                            <p class="time">${new Date(+objMessage.time).toString().split(' ').slice(1, 5).join(' ')}</p>
+                            <p class="message-text">${objMessage.message}</p>`
       this.nodeMessages.append(message)
     }
   }
