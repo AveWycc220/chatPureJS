@@ -14,9 +14,9 @@ router.redirect()
 
 const render = new DOMRender(cookie)
 const stateChat = new State(render)
-const apiSocket = new API('ws://127.0.0.1:5025', cookie, router, stateChat)
+const apiSocket = new API(process.env.API_ADDRESS, cookie, router, stateChat)
 
-const eventHandler = new EventsHandler({
+new EventsHandler({
   renderWorker: render,
   apiWorker: apiSocket,
   form: document.querySelector('#keys'),
@@ -27,5 +27,3 @@ const eventHandler = new EventsHandler({
   messageInput: document.querySelector('.textarea'),
   logoutButton: document.querySelector('#log-out')
 })
-
-console.log(process.env.MODE)
