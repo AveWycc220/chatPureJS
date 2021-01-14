@@ -1,4 +1,4 @@
-class Cookie{
+export default class Cookie{
   values={};
 
   constructor() {
@@ -46,5 +46,3 @@ class Cookie{
     else return -1;
   }
 }
-
-export default Cookie
