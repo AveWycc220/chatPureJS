@@ -42,7 +42,7 @@ section {
 }
 
 .someone {
-  margin-left: 1em;
+  margin: 0.5em 0.5em 0.5em 1em;
   padding: 0.5em;
 }
 
@@ -50,8 +50,9 @@ section {
   border: 2.5px #2431e2 solid;
   border-radius: 5px ;
   overflow: hidden;
-  width: 80vw;
-  min-height: 8em;
+  word-wrap: break-word;
+  width: 50vw;
+  min-height: 5em;
   background: #ffffff;
 }
 
@@ -66,7 +67,13 @@ section {
 }
 
 .message-text {
-  margin-top: 0.2em;
+  margin-top: 0.1em;
+}
+
+.time {
+  margin-top: 0.1em;
+  opacity: 0.75;
+  font-size: 1em * 0.75;
 }
 
 @media (min-width: 1950px) {
