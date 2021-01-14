@@ -4,9 +4,13 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const webpack = require('webpack')
 const Dotenv = require('dotenv-webpack')
 
+let config = {
+  mode: 'development'
+}
+
 
 module.exports = {
-  mode: 'production',
+  mode: config.mode,
   experiments: {
     asset: true
   },
@@ -51,6 +55,7 @@ module.exports = {
       }
     ],
   },
+  devtool: config.mode === 'production' ? undefined : 'source-map',
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Chat',
@@ -65,7 +70,7 @@ module.exports = {
     new CleanWebpackPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new Dotenv({
-      path: './dev.env',
+      path: config.mode === 'production' ? './prod.env' : './dev.env',
       safe: true
     }),
   ],
