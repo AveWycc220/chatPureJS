@@ -45,7 +45,7 @@ export default class DOMRender {
     if (this.nodeMessages) {
       const message = document.createElement('div')
       const btnList = `<div class="btn-list">
-                            <button class="edit"></button>
+                            <button class="edit""></button>
                             <button class="delete"></button>
                        </div>`
       const isMyMessage = objMessage.name === this.userName
@@ -62,7 +62,25 @@ export default class DOMRender {
     }
   }
 
+  rerenderMessage(objMessage) {
+    document.getElementById(`${objMessage.id}`).querySelector('.message-text').innerHTML = objMessage.message
+  }
+
   deleteMessage(objMessage) {
     document.getElementById(`${objMessage.id}`).remove()
+  }
+
+  showError(e) {
+    if (e) {
+      console.log(`Server-Error ${e}`)
+      document.querySelector('.root').innerHTML = `Server-Error ${e}`
+    } else {
+      console.log('Server-Error')
+      document.querySelector('.root').innerHTML = 'Server-Error'
+    }
+  }
+
+  showInfo(info, message) {
+    info.innerHTML = message
   }
 }
