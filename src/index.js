@@ -14,7 +14,7 @@ router.redirect()
 
 const render = new DOMRender(cookie)
 const stateChat = new State(render)
-const apiSocket = new API(process.env.API_ADDRESS, cookie, router, stateChat)
+const apiSocket = new API(process.env.API_ADDRESS, cookie, router, stateChat, render)
 
 new EventsHandler({
   renderWorker: render,

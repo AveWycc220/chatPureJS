@@ -1,10 +1,14 @@
 export default class API {
-  constructor(url, cookieWorker, router, stateChat) {
+  constructor(url, cookieWorker, router, stateChat, renderWorker) {
     this.cookie = cookieWorker
     this.router = router
     this.state = stateChat
+    this.render = renderWorker
     try {
       this.socket = new WebSocket(url)
+      this.socket.onerror = function () {
+        this.render.showError()
+      }.bind(this)
       if (!this.router.isLoginPage()) {
         this.socket.onopen = function () {
           this.getMessageList()
@@ -12,7 +16,7 @@ export default class API {
         this._listenCommand()
       }
     } catch(e) {
-      console.log(`Server-Error ${e}`)
+      this.render.showError(e)
     }
   }
 
@@ -29,7 +33,7 @@ export default class API {
       if (res.status === 1) {
         this.router.redirectToLogin()
       } else {
-        info.innerHTML = 'User is already created!'
+        this.render.showInfo(info, 'User is already created!')
       }
     }.bind(this)
   }
@@ -48,7 +52,7 @@ export default class API {
         this.cookie.add({name: 'name', value: res.name, maxAge: 86400, path:'/'})
         this.router.redirectToMain()
       } else {
-        info.innerHTML = 'Wrong Email or Password'
+        this.render.showInfo(info, 'Wrong Email or Password')
       }
     }.bind(this)
   }
@@ -115,19 +119,35 @@ export default class API {
     }.bind(this)
   }
 
-  edit(id) {
-
+  edit(id, messageText) {
+    const obj = {
+      command: 'message_edit',
+      id: id,
+      message: messageText,
+      user_key: this.cookie.getCookie('id')
+    }
+    this.socket.send(JSON.stringify(obj))
+    this.socket.onmessage = function(e) {
+      const res = JSON.parse(e.data)
+      if (res.status === 0) {
+        console.log(`Wrong ID`)
+      }
+    }.bind(this)
   }
 
   _listenCommand() {
     this.socket.addEventListener('message', e => {
-      console.log('Listener : ')
       const res = JSON.parse(e.data)
-      console.log(res)
-      console.log(res.command)
+      if (process.env.MODE === 'DEV') {
+        console.log('Listener : ')
+        console.log(res)
+        console.log(res.command)
+      }
       if (res.command === 'message_del' && res.status === 1) {
         if (this.state.storage) { delete this.state.storage[res.id] }
       } else if (res.command === 'message_create' && res.status === 1) {
+        if (this.state.storage) { this.state.storage[res.id] = res }
+      } else if (res.command === 'message_edit' && res.status === 1) {
         if (this.state.storage) { this.state.storage[res.id] = res }
       }
     })
