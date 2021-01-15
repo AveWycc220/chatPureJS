@@ -19,11 +19,12 @@ const apiSocket = new API(process.env.API_ADDRESS, cookie, router, stateChat)
 new EventsHandler({
   renderWorker: render,
   apiWorker: apiSocket,
+  routerWorker: router,
   form: document.querySelector('#keys'),
   loginButton: document.querySelector('#log-in'),
   signinButton: document.querySelector('#sign-in'),
   divInfo: document.querySelector('.info'),
   buttonSend: document.querySelector('#send'),
   messageInput: document.querySelector('.textarea'),
-  logoutButton: document.querySelector('#log-out')
+  logoutButton: document.querySelector('#log-out'),
 })

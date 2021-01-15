@@ -1,9 +1,10 @@
 export default class EventsHandler{
-  constructor({renderWorker = undefined, apiWorker = undefined, form = undefined,
+  constructor({renderWorker = undefined, routerWorker = undefined, apiWorker = undefined, form = undefined,
                 loginButton = undefined, signinButton =  undefined,
                   divInfo = undefined, buttonSend = undefined, messageInput = undefined,
-                    logoutButton = undefined }) {
+                    logoutButton = undefined}) {
     this.render = renderWorker
+    this.router = routerWorker
     this.api = apiWorker
     this.info = divInfo
     this.signinEvent(form, signinButton)
@@ -11,6 +12,7 @@ export default class EventsHandler{
     this.sendEvent(messageInput, buttonSend)
     this.loadingEvent()
     this.logoutEvent(logoutButton)
+    this.controlMessageEvent()
   }
 
   signinEvent(form, btn) {
@@ -71,6 +73,18 @@ export default class EventsHandler{
     if (logoutButton) {
       logoutButton.addEventListener('click', () => {
         this.api.logout()
+      })
+    }
+  }
+
+  controlMessageEvent() {
+    if (!this.router.isLoginPage()) {
+      document.addEventListener('click', e => {
+        if (e.target.classList.contains('edit')) {
+          // TODO this.api.edit(e.path[3].id)
+        } else if (e.target.classList.contains('delete')) {
+          this.api.delete(e.path[3].id)
+        }
       })
     }
   }

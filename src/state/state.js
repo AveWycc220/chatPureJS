@@ -1,6 +1,6 @@
 export default class State {
   constructor(renderWorker) {
-    this.storage = new Proxy([], {
+    this.storage = new Proxy({}, {
       set(target, p, value) {
         target[p] = value
         if (!renderWorker.nodeMessages) {
@@ -8,6 +8,11 @@ export default class State {
         } else {
           renderWorker.renderMessage(value)
         }
+        return true
+      },
+      deleteProperty(target, p) {
+        renderWorker.deleteMessage(target[p])
+        delete target[p]
         return true
       }
     })

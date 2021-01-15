@@ -25,7 +25,7 @@ export default class API {
     }
     this.socket.send(JSON.stringify(obj))
     this.socket.onmessage = function(e) {
-      let res = JSON.parse(e.data)
+      const res = JSON.parse(e.data)
       if (res.status === 1) {
         this.router.redirectToLogin()
       } else {
@@ -42,7 +42,7 @@ export default class API {
     }
     this.socket.send(JSON.stringify(obj))
     this.socket.onmessage = function(e) {
-      let res = JSON.parse(e.data)
+      const res = JSON.parse(e.data)
       if (res.status === 1) {
         this.cookie.add({name: 'id', value: res.user_key, maxAge: 86400, path:'/'})
         this.cookie.add({name: 'name', value: res.name, maxAge: 86400, path:'/'})
@@ -62,7 +62,7 @@ export default class API {
     }
     this.socket.send(JSON.stringify(obj))
     this.socket.onmessage = function(e) {
-      let res = JSON.parse(e.data)
+      const res = JSON.parse(e.data)
       if (res.status === 0) {
         this.cookie.delete('id')
         this.cookie.delete('name')
@@ -79,10 +79,11 @@ export default class API {
     }
     this.socket.send(JSON.stringify(obj))
     this.socket.onmessage = function(e) {
-      let res = JSON.parse(e.data)
+      const res = JSON.parse(e.data)
       if (res.status === 1) {
+        res.messages.reverse()
         for (let i = 0; i < res.messages.length; i++) {
-          if (this.state.storage) { this.state.storage[i] = res.messages[i] }
+          if (this.state.storage) { this.state.storage[res.messages[i].id] = res.messages[i] }
         }
       }
     }.bind(this)
@@ -99,9 +100,36 @@ export default class API {
     this.router.redirectToLogin()
   }
 
+  delete(id) {
+    const obj = {
+      command: 'message_del',
+      id: id,
+      user_key: this.cookie.getCookie('id')
+    }
+    this.socket.send(JSON.stringify(obj))
+    this.socket.onmessage = function(e) {
+      const res = JSON.parse(e.data)
+      if (res.status === 0) {
+        console.log(`Wrong ID`)
+      }
+    }.bind(this)
+  }
+
+  edit(id) {
+
+  }
+
   _listenCommand() {
     this.socket.addEventListener('message', e => {
-      console.log(JSON.parse(e.data))
+      console.log('Listener : ')
+      const res = JSON.parse(e.data)
+      console.log(res)
+      console.log(res.command)
+      if (res.command === 'message_del' && res.status === 1) {
+        if (this.state.storage) { delete this.state.storage[res.id] }
+      } else if (res.command === 'message_create' && res.status === 1) {
+        if (this.state.storage) { this.state.storage[res.id] = res }
+      }
     })
   }
 }
