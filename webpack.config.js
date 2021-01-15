@@ -5,7 +5,7 @@ const webpack = require('webpack')
 const Dotenv = require('dotenv-webpack')
 
 let config = {
-  mode: 'development'
+  mode: 'production'
 }
 
 
