@@ -7,7 +7,7 @@ section {
 
 %messages_button {
   transition: 0.5s;
-  &:hover {
+  &:hover, &:focus {
     cursor: pointer;
     transform: scale(1.1);
   }
@@ -37,14 +37,14 @@ section {
 
 #send {
   transition: 0.5s;
-  &:hover {
+  &:hover, &:focus {
     cursor: pointer;
     transform: scale(1.1);
   }
   border: none;
   outline: none;
-  width: 3vw;
-  height: 3vw;
+  width: 2.5vw;
+  height: 2.5vw;
   font-size: inherit;
   margin: auto 1em 0.2em 1em;
   background: url("../assets/img/send.svg") no-repeat;
@@ -96,14 +96,31 @@ section {
   justify-content: space-between;
 }
 
-#edit {
+.edit {
   @extend %messages_button;
   background: url("../assets/img/edit.svg") no-repeat;
 }
 
-#delete {
+.delete {
   @extend %messages_button;
   background: url("../assets/img/delete.svg") no-repeat;
+}
+
+.message-text[contenteditable="true"] {
+  &:active, &:focus {
+    outline-offset: 1px;
+    outline: 1px #2431e2 solid;
+  }
+  outline-offset: 1px;
+  outline: 1px #2431e2 solid;;
+  font-family: inherit;
+  font-size: inherit;
+  resize: none;
+}
+
+.active {
+  width: 1.5vw;
+  height: 1.5vw;
 }
 
 @media (min-width: 1950px) {
@@ -128,11 +145,11 @@ section {
   section {
     font-size: 16px;
   }
-  #edit {
+  .edit {
     width: 2vw;
     height: 2vw;
   }
-  #delete {
+  .delete {
     width: 2vw;
     height: 2vw;
   }

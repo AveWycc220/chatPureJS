@@ -14,7 +14,7 @@ header {
 
 #log-out {
   transition: 0.5s;
-  &:hover {
+  &:hover, &:focus {
     cursor: pointer;
     transform: scale(1.1);
   }
