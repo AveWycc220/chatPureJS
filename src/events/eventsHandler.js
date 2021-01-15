@@ -1,6 +1,6 @@
 export default class EventsHandler{
-  constructor({renderWorker = undefined, routerWorker = undefined, apiWorker = undefined, form = undefined,
-                loginButton = undefined, signinButton =  undefined,
+  constructor({renderWorker = undefined, routerWorker = undefined, apiWorker = undefined,
+                form = undefined, loginButton = undefined, signinButton =  undefined,
                   divInfo = undefined, buttonSend = undefined, messageInput = undefined,
                     logoutButton = undefined}) {
     this.render = renderWorker
@@ -79,14 +79,37 @@ export default class EventsHandler{
 
   controlMessageEvent() {
     if (!this.router.isLoginPage()) {
+      let isEditing = false
       document.addEventListener('click', e => {
-        if (e.target.classList.contains('edit')) {
-          // TODO this.api.edit(e.path[3].id)
-        } else if (e.target.classList.contains('delete')) {
+        if (this._isEdit(e.target)) {
+          isEditing = this._editMessage(e, isEditing)
+        } else if (this._isDelete(e.target)) {
           this.api.delete(e.path[3].id)
         }
       })
     }
+  }
+
+  _editMessage(e, isEditing) {
+    const message = e.path[3].querySelector('.message-text')
+    if (!isEditing) {
+      e.target.classList.add('active')
+      message.setAttribute('contenteditable', 'true')
+      return true
+    } else {
+      e.target.classList.remove('active')
+      this.api.edit(e.path[3].id, message.innerHTML)
+      message.removeAttribute('contenteditable')
+      return false
+    }
+  }
+
+  _isDelete(target) {
+    return target.classList.contains('delete')
+  }
+
+  _isEdit(target) {
+    return target.classList.contains('edit')
   }
 
   _callSendAPI(message) {
