@@ -1,45 +1,21 @@
 export default class EventsHandler{
   constructor({renderWorker = undefined, routerWorker = undefined, apiWorker = undefined,
-                form = undefined, loginButton = undefined, signinButton =  undefined,
-                  divInfo = undefined, buttonSend = undefined, messageInput = undefined,
-                    logoutButton = undefined}) {
+                buttonSend = undefined, messageInput = undefined, logoutButton = undefined}) {
     this.render = renderWorker
     this.router = routerWorker
     this.api = apiWorker
-    this.info = divInfo
-    this.signinEvent(form, signinButton)
-    this.loginEvent(form, loginButton)
     this.sendEvent(messageInput, buttonSend)
     this.loadingEvent()
     this.logoutEvent(logoutButton)
     this.controlMessageEvent()
   }
 
-  signinEvent(form, btn) {
-    if (btn && form) {
-      btn.addEventListener('click', () => {
-        this.render.showInput(form[2])
-        if (form[0].value && form[1].value && form[2].value) {
-          this.api.signIn(form, this.info)
-          this.render.restyleForm(form, true)
-        } else {
-          this.render.restyleForm(form, true)
-        }
-      })
-    }
+  getWrongDataEvent() {
+    return new Event('wrongData')
   }
 
-  loginEvent(form, btn) {
-    if (btn && form) {
-      btn.addEventListener('click', () => {
-        this._login(form)
-      })
-      document.addEventListener('keydown', e => {
-        if (e.key === 'Enter') {
-          this._login(form)
-        }
-      })
-    }
+  getUserAlreadyExistEvent() {
+    return new Event('userExist')
   }
 
   sendEvent(messageInput, btn) {
@@ -114,14 +90,5 @@ export default class EventsHandler{
 
   _callSendAPI(message) {
     if (message) { this.api.send(message) }
-  }
-
-  _login(form) {
-    if (form[0].value && form[1].value) {
-      this.api.logIn(form, this.info)
-      this.render.restyleForm(form)
-    } else {
-      this.render.restyleForm(form)
-    }
   }
 }

@@ -1,9 +1,10 @@
 export default class API {
-  constructor(url, cookieWorker, router, stateChat, renderWorker) {
+  constructor(url, cookieWorker, router, stateChat, renderWorker, eventHandler) {
     this.cookie = cookieWorker
     this.router = router
     this.state = stateChat
     this.render = renderWorker
+    this.eventHandler = eventHandler
     try {
       this.socket = new WebSocket(url)
       this.socket.onerror = function () {
@@ -33,12 +34,13 @@ export default class API {
       if (res.status === 1) {
         this.router.redirectToLogin()
       } else {
-        this.render.showInfo(info, 'User is already created!')
+        const userExistEvent = this.eventHandler.getUserAlreadyExistEvent()
+        document.dispatchEvent(userExistEvent)
       }
     }.bind(this)
   }
 
-  logIn(form, info) {
+  logIn(form) {
     const obj = {
       command: 'user_login',
       email: form[0].value,
@@ -52,7 +54,8 @@ export default class API {
         this.cookie.add({name: 'name', value: res.name, maxAge: 86400, path:'/'})
         this.router.redirectToMain()
       } else {
-        this.render.showInfo(info, 'Wrong Email or Password')
+        const wrongDataEvent = this.eventHandler.getWrongDataEvent()
+        document.dispatchEvent(wrongDataEvent)
       }
     }.bind(this)
   }
