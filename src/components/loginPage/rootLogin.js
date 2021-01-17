@@ -1,7 +1,7 @@
 import Basement from '../base'
 
 export default class RootLogin extends Basement {
-  init () {
+  init() {
     this.mainBasement.classList.add('root')
     this.mainBasement.style.display = 'none'
   }

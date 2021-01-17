@@ -1,7 +1,7 @@
 import Basement from '../base'
 
 export default class ButtonSignin extends Basement {
-  init () {
+  init() {
     this.mainBasement.id = 'sign-in'
   }
 
@@ -18,7 +18,7 @@ export default class ButtonSignin extends Basement {
     })
   }
 
-  render () {
+  render() {
     return 'Sign In'
   }
 
