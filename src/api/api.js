@@ -10,6 +10,9 @@ export default class API {
       this.socket.onerror = function () {
         this.render.showError()
       }.bind(this)
+      this.socket.onclose = function () {
+        this.render.showError()
+      }.bind(this)
       if (!this.router.isLoginPage()) {
         this.socket.onopen = function () {
           this.getMessageList()
