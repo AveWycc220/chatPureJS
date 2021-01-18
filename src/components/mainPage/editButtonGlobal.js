@@ -27,6 +27,18 @@ export default class EditButtonGlobal extends Basement {
         }
       }
     })
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && e.shiftKey !== true && this._isMessageText(e.target)) {
+        const messageDiv = e.path[1]
+        const messageText = messageDiv.querySelector('.message-text')
+        if ((messageDiv.id === this.idEditing) && this.isEditing) {
+          e.target.classList.remove('active')
+          this.apiWorker.edit(messageDiv.id, messageText.innerHTML)
+          messageText.removeAttribute('contenteditable')
+          this.isEditing = false
+        }
+      }
+    })
   }
 
   render() {
@@ -35,5 +47,9 @@ export default class EditButtonGlobal extends Basement {
 
   _isEdit(target) {
     return target.classList.contains('edit')
+  }
+
+  _isMessageText(target) {
+    return target.classList.contains('message-text')
   }
 }

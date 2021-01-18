@@ -13,7 +13,7 @@ export default class SendButton extends Basement {
       messageInput.textContent = ''
     })
     document.addEventListener('keydown', e => {
-      if (e.key === 'Enter' && e.shiftKey !== true) {
+      if (e.key === 'Enter' && e.shiftKey !== true && this._isMessageField(e.target)) {
         if (messageInput.textContent) { this.apiWorker.send(messageInput.textContent) }
         messageInput.textContent = ''
         e.preventDefault()
@@ -23,5 +23,9 @@ export default class SendButton extends Basement {
 
   render() {
     return ''
+  }
+
+  _isMessageField(target) {
+    return target.classList.contains('textarea')
   }
 }
