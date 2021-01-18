@@ -10,7 +10,6 @@ export default class DeleteButtonGlobal extends Basement {
   events() {
     document.addEventListener('click', e => {
       if (this._isDelete(e.target)) {
-        console.log(e.path)
         this.apiWorker.delete(e.path[3].id)
       }
     })
