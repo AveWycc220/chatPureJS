@@ -7,7 +7,9 @@ export default class MessageInput extends Basement {
     this.mainBasement.setAttribute('contenteditable', 'true')
   }
 
-  events(){}
+  events(){
+
+  }
 
   render(){
     return ''

@@ -1,15 +1,12 @@
-import Basement from '../base'
+import Root from '../root'
 
-export default class RootLogin extends Basement {
+export default class RootLogin extends Root {
   init() {
-    this.mainBasement.classList.add('root')
-    this.mainBasement.style.display = 'none'
+
   }
 
   events() {
-    document.addEventListener('DOMContentLoaded', () => {
-      this.mainBasement.style.display = 'block'
-    })
+
   }
 
   render() {

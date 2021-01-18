@@ -22,5 +22,6 @@ export default class SendButton extends Basement {
   }
 
   render() {
+    return ''
   }
 }

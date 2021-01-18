@@ -6,6 +6,7 @@ export default class NameDiv extends Basement {
   }
 
   events() {
+
   }
 
   render() {
