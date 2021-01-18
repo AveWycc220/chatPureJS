@@ -1,30 +1,29 @@
 export default class API {
-  constructor(url, cookieWorker, router, stateChat, renderWorker, eventHandler) {
+  constructor(url, cookieWorker, router, eventHandler) {
     this.cookie = cookieWorker
     this.router = router
-    this.state = stateChat
-    this.render = renderWorker
     this.eventHandler = eventHandler
+    this.messageList = []
     try {
       this.socket = new WebSocket(url)
       this.socket.onerror = function () {
-        this.render.showError()
+        this._error()
       }.bind(this)
       this.socket.onclose = function () {
-        this.render.showError()
+        this._error()
       }.bind(this)
       if (!this.router.isLoginPage()) {
         this.socket.onopen = function () {
-          this.getMessageList()
+         this.getMessageList()
         }.bind(this)
         this._listenCommand()
       }
     } catch(e) {
-      this.render.showError(e)
+      this._error(e)
     }
   }
 
-  signIn(form, info) {
+  signIn(form) {
     const obj = {
       command: 'user_create',
       name: form[2].value,
@@ -91,10 +90,9 @@ export default class API {
     this.socket.onmessage = function(e) {
       const res = JSON.parse(e.data)
       if (res.status === 1) {
-        res.messages.reverse()
-        for (let i = 0; i < res.messages.length; i++) {
-          if (this.state.storage) { this.state.storage[res.messages[i].id] = res.messages[i] }
-        }
+        this.messageList = res.messages.reverse()
+        const messageListEvent = this.eventHandler.getCreateMessageListEvent()
+        document.dispatchEvent(messageListEvent)
       }
     }.bind(this)
   }
@@ -150,12 +148,46 @@ export default class API {
         console.log(res.command)
       }
       if (res.command === 'message_del' && res.status === 1) {
-        if (this.state.storage) { delete this.state.storage[res.id] }
+        this._deleteMessage(res)
+        const deleteEvent = this.eventHandler.getDeleteMessageEvent()
+        document.dispatchEvent(deleteEvent)
       } else if (res.command === 'message_create' && res.status === 1) {
-        if (this.state.storage) { this.state.storage[res.id] = res }
+        this._addMessage(res)
+        const sendEvent = this.eventHandler.getSendMessageEvent()
+        document.dispatchEvent(sendEvent)
       } else if (res.command === 'message_edit' && res.status === 1) {
-        if (this.state.storage) { this.state.storage[res.id] = res }
+        this._editMessage(res)
+        const editEvent = this.eventHandler.getEditMessageEvent()
+        document.dispatchEvent(editEvent)
       }
     })
+  }
+
+  _deleteMessage(message) {
+    this.messageList.some((item, i) => {
+      if (+item.id === +message.id) {
+        delete this.messageList[i]
+        this.messageList = this.messageList.filter((elem) => Boolean(elem))
+        return true
+      }
+    })
+  }
+
+  _addMessage(message) {
+    this.messageList.push(message)
+  }
+
+  _editMessage(message) {
+    this.messageList.some((item, i) => {
+      if (+this.messageList[i].id === +message.id) {
+        this.messageList[i].message = message.message
+        return true
+      }
+    })
+  }
+
+  _error(e=undefined) {
+    console.log(`Server-Error. Press F5 to Retry. ${e ? e : ''}`)
+    document.body.innerHTML = `Server-Error. Press F5 to Retry. ${e ? e : ''}`
   }
 }
