@@ -1,18 +1,13 @@
 export default class Basement {
   stat = {}
 
-  constructor({renderWorker = undefined, apiWorker = undefined, node = undefined,
-                typeOfElement = undefined, insert=undefined, insertElement=undefined,
-                  cookieWorker = undefined, childComponents = undefined, prependElements=undefined,
-                eventHandler = undefined, className = undefined}) {
-    this.renderWorker = renderWorker
-    this.eventHandler = eventHandler
+  constructor({apiWorker = undefined, node = undefined, typeOfElement = undefined, insert=undefined,
+                insertElement=undefined, cookieWorker = undefined, childComponents = undefined,
+                prependElements=undefined}) {
     this.cookieWorker = cookieWorker
     this.apiWorker = apiWorker
-    this.className = className
     this.mainBasement = document.createElement(`${typeOfElement}`)
     this.node = document.querySelector(`${node}`)
-    //this.nodeList = document.querySelectorAll(`${nodeList}`)
     this.childComponents = childComponents
     this.prependELements = prependElements
 
