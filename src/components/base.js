@@ -1,5 +1,5 @@
 export default class Basement {
-  stat = {}
+  state = {}
 
   constructor({apiWorker = undefined, node = undefined, typeOfElement = undefined, insert=undefined,
                 insertElement=undefined, cookieWorker = undefined, childComponents = undefined,
@@ -14,7 +14,7 @@ export default class Basement {
     this.init()
 
     const propThis = this
-    this.stat = new Proxy(this.stat, {
+    this.state = new Proxy(this.state, {
       set(target, property, value) {
         target[property] = value
         propThis.push()

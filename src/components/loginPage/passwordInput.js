@@ -8,17 +8,17 @@ export default class PasswordInput extends Basement {
     this.mainBasement.name = 'password'
     this.mainBasement.placeholder = 'Password'
     this.mainBasement.setAttribute('maxlength', '50')
-    this.stat.length = 0
+    this.state.length = 0
   }
 
   events() {
     document.addEventListener('input', e => {
-      this.stat.length = this.mainBasement.value.length
+      this.state.length = this.mainBasement.value.length
     })
   }
 
   render() {
-    if (this.stat.length === 0) { this.mainBasement.style.border = '2px solid red' }
+    if (this.state.length === 0) { this.mainBasement.style.border = '2px solid red' }
     else { this.mainBasement.style = null }
   }
 }

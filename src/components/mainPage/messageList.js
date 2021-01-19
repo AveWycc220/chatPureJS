@@ -33,17 +33,17 @@ export default class MessageList extends Basement {
       const message = document.createElement('div')
       message.classList.add('message')
       message.id = this.lastId
-      const isMyMessage = this.cookieWorker.getCookie('name') === this.stat[this.lastId].name
+      const isMyMessage = this.cookieWorker.getCookie('name') === this.state[this.lastId].name
       isMyMessage ? message.classList.add('my') : message.classList.add('someone')
       message.innerHTML =
         `<div class="control"> 
-             <p class="nickname">${this.stat[this.lastId].name}</p>
+             <p class="nickname">${this.state[this.lastId].name}</p>
              ${isMyMessage ? btnList : ''}
            </div>
            <p class="time">
-              ${new Date(+this.stat[this.lastId].time).toString().split(' ').slice(1, 5).join(' ')}
+              ${new Date(+this.state[this.lastId].time).toString().split(' ').slice(1, 5).join(' ')}
            </p>
-           <p class="message-text">${this.stat[this.lastId].message}</p>`
+           <p class="message-text">${this.state[this.lastId].message}</p>`
       return message
     }
     return ''
@@ -52,7 +52,7 @@ export default class MessageList extends Basement {
   _readMessages() {
     this.apiWorker.messageList.forEach((item) => {
       this.lastId = item.id
-      this.stat[item.id] = item
+      this.state[item.id] = item
     })
   }
 }
