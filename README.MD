@@ -21,3 +21,5 @@ Chat with default architecture.
 Chat on self-made components.
 ##### v1.2.1
 Update v1.2, remove garbage from base.js in components/
+##### v1.2.2
+Rename this.stat on this.state in components
