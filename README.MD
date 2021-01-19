@@ -1,6 +1,6 @@
-## Chat on PureJS with Webpack
+## Chat on PureJS / WebSocket with Webpack
 
-####Installation Packages
+#### Installation Packages
 
 `npm i`
 
@@ -15,9 +15,9 @@ Run dev-server. (Use 'development' mode in webpack.config)
 
 #### Releases
 
-#####v1.1
+##### v1.1
 Chat with default architecture.
-#####v1.2
+##### v1.2
 Chat on self-made components.
-#####v1.2.1
+##### v1.2.1
 Update v1.2, remove garbage from base.js in components/
