@@ -21,3 +21,8 @@ Chat with default architecture.
 Chat on self-made components.
 ##### v1.2.1
 Update v1.2, remove garbage from base.js in components/
+
+
+#### Back-End
+
+Back-End wrote on PHP and started on Denver.
